@@ -1,7 +1,22 @@
 <resources>
-    <string name="app_name">android_3</string>
-    <string name="skip">skip</string>
-    <string name="next">next</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="app_name">TODO</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Robert">Directed by ROBERT B. WEIDE </string>
+    <string name="next">Next</string>
+    <string name="category">Category</string>
+    <string name="type">Type</string>
+    <string name="price">Price</string>
+    <string name="accessibility">Accessibility</string>
+    <string name="participants">Participants</string>
+    <string name="explore_the_nightlife_of_your_city">Explore the nightlife of your city</string>
+    <string name="free">Free</string>
+    <string name="skip">Skip</string>
+
+
+    <string-array name="dogNames">
+        <item>Type</item>
+        <item>Jame</item>
+        <item>Hunter</item>
+        <item>Big boss</item>
+    </string-array>
 </resources>

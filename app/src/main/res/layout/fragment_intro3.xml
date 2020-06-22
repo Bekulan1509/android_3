@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:padding="16dp"
     android:layout_height="match_parent">
     <TextView
         android:id="@+id/TV_fragment_3"
@@ -12,4 +13,4 @@
         android:text="@string/hello_blank_fragment"
         android:gravity="center_horizontal"/>
 
-</LinearLayout>
+</RelativeLayout>

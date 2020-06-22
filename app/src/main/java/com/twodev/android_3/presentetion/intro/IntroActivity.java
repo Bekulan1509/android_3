@@ -1,4 +1,4 @@
-package com.twodev.android_3;
+package com.twodev.android_3.presentetion.intro;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,15 +9,19 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+
+import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
+import com.twodev.android_3.R;
+import com.twodev.android_3.data.PreferenceHelper;
+import com.twodev.android_3.presentetion.main.MainActivity;
 
 public class IntroActivity extends AppCompatActivity {
-    ViewPager viewPager;
-    Button btnSkip;
-    Button btnNext;
+    private ViewPager viewPager;
+    private Button btnSkip;
+    private Button btnNext;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,24 +30,35 @@ public class IntroActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         btnSkip = findViewById(R.id.btn_skip);
         btnNext = findViewById(R.id.btn_next);
-        viewPager.setAdapter(new SectionPagerAdapter(getSupportFragmentManager(), 3));
+        WormDotsIndicator wormDotsIndicator = findViewById(R.id.worm_dots_indicator);
+        viewPager.setAdapter(new SectionPagerAdapter(getSupportFragmentManager()));
+        wormDotsIndicator.setViewPager(viewPager);
 
 
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+              //  new Prefs(IntroActivity.this).isShown(true);
+                PreferenceHelper.getInstance(IntroActivity.this).setIsShow();
                 startActivity(new Intent(IntroActivity.this, MainActivity.class));
                 finish();
+
             }
         });
-        pageChange();
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(viewPager.getCurrentItem()==2){
+                    PreferenceHelper.getInstance(IntroActivity.this).setIsShow();
+                    startActivity(new Intent(IntroActivity.this, MainActivity.class));
+                    finish();
+                }else
+                    viewPager.setCurrentItem(getItem(+1), true);
 
-                viewPager.setCurrentItem(getItem(+1), true);
             }
         });
+        pageChange();
+
 
 
     }
@@ -63,15 +78,21 @@ public class IntroActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 if (position == 2) {
                     btnNext.setText("START");
-                    btnSkip.setVisibility(View.INVISIBLE);
-                    btnNext.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            startActivity(new Intent(IntroActivity.this, MainActivity.class));
-                            finish();
-                        }
-                    });
-                } else if (position<=1) {
+                    btnSkip.setVisibility(View.GONE);
+
+//                    btnNext.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+////                            SharedPreferences preferences = IntroActivity.this.getPreferences(MODE_PRIVATE);
+////                            preferences.edit().putBoolean("isShown",true).apply();
+////                           Log.d("lala", "onClick: "+preferences);
+////                            new Prefs(IntroActivity.this).isShown(true);
+//                            PreferenceHelper.getInstance(IntroActivity.this).setIsShow();
+//                            startActivity(new Intent(IntroActivity.this, MainActivity.class));
+//                            finish();
+//                        }
+//                    });
+                } else if (position <= 1) {
                     btnNext.setText("next");
                     btnSkip.setVisibility(View.VISIBLE);
 
@@ -89,8 +110,8 @@ public class IntroActivity extends AppCompatActivity {
     public class SectionPagerAdapter extends FragmentPagerAdapter {
 
 
-        public SectionPagerAdapter(@NonNull FragmentManager fm, int behavior) {
-            super(fm, behavior);
+        public SectionPagerAdapter(@NonNull FragmentManager fm) {
+            super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         }
 
         @NonNull
